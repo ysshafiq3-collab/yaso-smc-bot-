@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#00ff41">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="YASO Bot">
 <title>YASO SMC Pro Bot</title>
 <link rel="manifest" href="manifest.json">
@@ -14,7 +13,6 @@
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">
     <div class="brand-icon">⬡</div>
@@ -23,207 +21,149 @@
       <div class="brand-sub">SMART MONEY CONCEPTS</div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="status-pill" id="statusPill">
-      <div class="status-dot" id="statusDot"></div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="status-pill">
+      <div class="status-dot" id="statusDot" style="background:var(--red)"></div>
       <span id="statusTxt">OFFLINE</span>
     </div>
     <div class="clock" id="clock">--:--:--</div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PAGE 1 — SIGNAL                            -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: SIGNAL -->
 <div class="page active" id="page-signal">
-
   <button class="gen-btn" id="genBtn" onclick="generateSignal()">
     <i class="ti ti-bolt"></i> GENERATE SIGNAL
   </button>
-
   <div class="card hl">
     <div class="sec-label">SIGNAL OUTPUT</div>
     <div class="signal-big idle" id="sigBig">---</div>
     <div class="signal-sub">XAUUSD &nbsp;|&nbsp; M5</div>
   </div>
-
   <div class="card hl">
     <div class="sec-label">WIN PROBABILITY</div>
     <div class="prob-pct" id="vProb">---%</div>
     <div class="prob-track"><div class="prob-fill" id="probFill" style="width:0%"></div></div>
     <div class="prob-ends"><span>LOW</span><span>HIGH</span></div>
   </div>
-
   <div class="card">
     <div class="sec-label">ENTRY / SL / TP</div>
-    <div class="kv"><span class="kv-l">Entry price</span><span class="kv-v cy" id="vEntry">---</span></div>
+    <div class="kv"><span class="kv-l">Entry</span><span class="kv-v cy" id="vEntry">---</span></div>
     <div class="kv"><span class="kv-l">Stop loss</span><span class="kv-v dn" id="vSL">---</span></div>
     <div class="kv"><span class="kv-l">Take profit</span><span class="kv-v up" id="vTP">---</span></div>
     <div class="kv"><span class="kv-l">Lot size</span><span class="kv-v" id="vLot">---</span></div>
   </div>
-
   <div class="card">
     <div class="sec-label">ANALYSIS</div>
     <div class="kv"><span class="kv-l">RSI (14)</span><span class="kv-v cy" id="vRSI">---</span></div>
-    <div class="kv"><span class="kv-l">MACD hist</span><span class="kv-v cy" id="vMACD">---</span></div>
+    <div class="kv"><span class="kv-l">MACD</span><span class="kv-v cy" id="vMACD">---</span></div>
     <div class="kv"><span class="kv-l">BOS</span><span class="kv-v up" id="vBOS">---</span></div>
     <div class="kv"><span class="kv-l">Order block</span><span class="kv-v up" id="vOB">---</span></div>
   </div>
-
-  <!-- EXECUTE BUTTON -->
-  <button class="exec-btn" id="execBtn" onclick="executeTrade()" disabled>
-    🚀  EXECUTE TRADE
-  </button>
-
-  <!-- Auto toggle -->
-  <div class="card">
-    <div class="tog-row">
-      <span class="tog-label">AUTO EXECUTE ON SIGNAL</span>
-      <div class="tog on" id="autoTog" onclick="toggleAutoTrade()">
-        <div class="tog-t"></div>
-      </div>
-    </div>
-  </div>
-
+  <button class="exec-btn" id="execBtn" onclick="executeTrade()" disabled>🚀  EXECUTE TRADE</button>
   <button class="gen-btn" id="scanBtn" onclick="toggleAutoScan()"
     style="border-color:var(--g4);color:var(--text3);margin-bottom:0">
     <i class="ti ti-player-play"></i> START AUTO SCAN
   </button>
-
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PAGE 2 — CONNECT                           -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: CONNECT -->
 <div class="page" id="page-connect">
-
-  <!-- Discord Connection -->
   <div class="conn-card">
     <div class="conn-header">
-      <div class="conn-title">
-        <i class="ti ti-brand-discord"></i> DISCORD
-      </div>
-      <div class="conn-status disconnected" id="discordStatus">● NOT CONNECTED</div>
+      <div class="conn-title"><i class="ti ti-server"></i> API CONNECTION</div>
+      <div class="conn-status disconnected" id="connStatus">● DISCONNECTED</div>
     </div>
-    <div class="conn-detail" id="discordDetail">Enter webhook URL to receive alerts on phone</div>
-    <input class="conn-input" id="discordWebhookInput"
-           placeholder="https://discord.com/api/webhooks/...">
-    <div class="conn-row">
-      <button class="conn-btn" id="discordConnectBtn" onclick="connectDiscord()">
-        <i class="ti ti-plug"></i> CONNECT
-      </button>
-      <button class="conn-btn danger" onclick="disconnectDiscord()">
-        <i class="ti ti-plug-off"></i> REMOVE
-      </button>
-    </div>
+    <div class="conn-detail" id="connDetail">Enter your laptop's IP address</div>
+    <input class="conn-input" id="apiUrlInput" placeholder="http://192.168.1.100:5000">
+    <button class="conn-btn" onclick="connectAPI()"><i class="ti ti-plug"></i> CONNECT</button>
   </div>
 
-  <!-- MT5 Connection -->
-  <div class="conn-card">
-    <div class="conn-header">
-      <div class="conn-title">
-        <i class="ti ti-chart-candle"></i> METATRADER 5
-      </div>
-      <div class="conn-status disconnected" id="mt5Status">● NOT CONFIGURED</div>
-    </div>
-    <div class="conn-detail" id="mt5Detail">Enter MT5 account credentials</div>
-    <input class="conn-input" id="mt5LoginInput"
-           placeholder="MT5 Login (e.g. 108949850)" type="number">
-    <input class="conn-input" id="mt5PasswordInput"
-           placeholder="MT5 Password" type="password">
-    <input class="conn-input" id="mt5ServerInput"
-           placeholder="Server (e.g. MetaQuotes-Demo)">
-    <div class="conn-row">
-      <button class="conn-btn" onclick="connectMT5()">
-        <i class="ti ti-plug"></i> SAVE
-      </button>
-      <button class="conn-btn danger" onclick="disconnectMT5()">
-        <i class="ti ti-plug-off"></i> REMOVE
-      </button>
-    </div>
-  </div>
-
-  <!-- Info -->
   <div class="card">
-    <div class="sec-label">HOW IT WORKS</div>
-    <div class="kv"><span class="kv-l">1. Connect Discord</span><span class="kv-v up">Alerts on phone</span></div>
-    <div class="kv"><span class="kv-l">2. Save MT5 creds</span><span class="kv-v up">Auto trading</span></div>
-    <div class="kv"><span class="kv-l">3. Generate signal</span><span class="kv-v up">Analyze market</span></div>
-    <div class="kv"><span class="kv-l">4. Execute trade</span><span class="kv-v up">Order placed</span></div>
+    <div class="sec-label">HOW TO CONNECT</div>
+    <div class="kv"><span class="kv-l">Step 1</span><span class="kv-v up">Laptop pe API run karo</span></div>
+    <div class="kv"><span class="kv-l">Step 2</span><span class="kv-v up">cmd: ipconfig</span></div>
+    <div class="kv"><span class="kv-l">Step 3</span><span class="kv-v up">IPv4 address copy karo</span></div>
+    <div class="kv"><span class="kv-l">Step 4</span><span class="kv-v up">http://IP:5000 daalo</span></div>
+    <div class="kv"><span class="kv-l">Step 5</span><span class="kv-v up">CONNECT click karo</span></div>
   </div>
 
+  <div class="card">
+    <div class="sec-label">ACCOUNT STATUS</div>
+    <div class="kv"><span class="kv-l">Balance</span><span class="kv-v" id="vBal">---</span></div>
+    <div class="kv"><span class="kv-l">Equity</span><span class="kv-v" id="vEq">---</span></div>
+    <div class="kv"><span class="kv-l">P&L</span><span class="kv-v up" id="vPnL">---</span></div>
+  </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PAGE 3 — DASHBOARD                         -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: DASHBOARD -->
 <div class="page" id="page-dashboard">
-
   <div class="metrics">
     <div class="metric"><div class="metric-label">SIGNALS</div><div class="metric-val gn" id="mSig">0</div></div>
     <div class="metric"><div class="metric-label">TRADES</div><div class="metric-val" id="mTrade">0</div></div>
     <div class="metric"><div class="metric-label">WIN RATE</div><div class="metric-val gn" id="mWin">---%</div></div>
     <div class="metric"><div class="metric-label">SPREAD</div><div class="metric-val cy" id="mSpread">---</div></div>
   </div>
-
   <div class="card">
-    <div class="sec-label">ACCOUNT
+    <div class="sec-label">PRICE ACTION — XAUUSD M5
       <span style="float:right;color:var(--g1);font-weight:700" id="livePrice">---</span>
     </div>
-    <div class="kv"><span class="kv-l">Balance</span><span class="kv-v" id="vBal">$564.42</span></div>
-    <div class="kv"><span class="kv-l">Equity</span><span class="kv-v" id="vEq">$564.42</span></div>
-    <div class="kv"><span class="kv-l">Open P&L</span><span class="kv-v up" id="vPnL">$0.00</span></div>
-    <div class="kv"><span class="kv-l">Broker</span><span class="kv-v am">MetaQuotes Ltd.</span></div>
-  </div>
-
-  <div class="card">
-    <div class="sec-label">PRICE ACTION — XAUUSD M5</div>
     <div class="chart-wrap"><canvas id="priceChart"></canvas></div>
   </div>
-
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PAGE 4 — HISTORY                           -->
-<!-- ═══════════════════════════════════════════ -->
-<div class="page" id="page-history">
+<!-- PAGE: POSITIONS -->
+<div class="page" id="page-positions">
+  <div class="card">
+    <div class="sec-label">OPEN POSITIONS
+      <span style="float:right;color:var(--cyan)" id="openCount">0 open</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="hist-table">
+        <thead><tr><th>TICKET</th><th>TYPE</th><th>PRICE</th><th>PROFIT</th></tr></thead>
+        <tbody id="posBody">
+          <tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px">NO OPEN POSITIONS</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="conn-btn" onclick="loadPositions()" style="margin-top:10px">
+      <i class="ti ti-refresh"></i> REFRESH
+    </button>
+  </div>
+
   <div class="card">
     <div class="sec-label">SIGNAL HISTORY</div>
     <div style="overflow-x:auto">
       <table class="hist-table">
         <thead><tr><th>TIME</th><th>DIR</th><th>ENTRY</th><th>SL</th><th>TP</th></tr></thead>
         <tbody id="histBody">
-          <tr><td colspan="5" style="text-align:center;color:var(--text3);padding:22px;letter-spacing:1px">AWAITING SIGNALS...</td></tr>
+          <tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">AWAITING...</td></tr>
         </tbody>
       </table>
     </div>
   </div>
+
   <div class="card">
     <div class="sec-label">SYSTEM LOG</div>
     <div class="log-box" id="logBox"></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!-- PAGE 5 — SETTINGS                          -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: SETTINGS -->
 <div class="page" id="page-settings">
   <div class="card">
-    <div class="sec-label">TRADING CONFIG</div>
-    <div class="setting-row"><span class="setting-label">Symbol</span><input class="setting-input" id="setSymbol" value="XAUUSD"></div>
-    <div class="setting-row"><span class="setting-label">Timeframe</span><input class="setting-input" id="setTF" value="M5"></div>
-    <div class="setting-row"><span class="setting-label">Lot size</span><input class="setting-input" id="setLot" value="0.01"></div>
-    <div class="setting-row"><span class="setting-label">Stop loss (pips)</span><input class="setting-input" id="setSL" value="20"></div>
-    <div class="setting-row"><span class="setting-label">TP ratio</span><input class="setting-input" id="setTP" value="2"></div>
-    <div class="setting-row"><span class="setting-label">Risk %</span><input class="setting-input" id="setRisk" value="1"></div>
-    <button class="save-btn" onclick="saveSettings()">💾  SAVE SETTINGS</button>
-  </div>
-  <div class="card">
     <div class="sec-label">BOT INFO</div>
-    <div class="kv"><span class="kv-l">Version</span><span class="kv-v am">v2.0.0</span></div>
+    <div class="kv"><span class="kv-l">Version</span><span class="kv-v am">v3.0.0</span></div>
     <div class="kv"><span class="kv-l">Developer</span><span class="kv-v">YASO Media Studio</span></div>
     <div class="kv"><span class="kv-l">Strategy</span><span class="kv-v">SMC + RSI + MACD</span></div>
-    <div class="kv"><span class="kv-l">Platform</span><span class="kv-v">MT5 + Discord</span></div>
+    <div class="kv"><span class="kv-l">Platform</span><span class="kv-v">MT5 Real API</span></div>
+    <div class="kv"><span class="kv-l">API</span><span class="kv-v up" id="apiDisplay">Not set</span></div>
+  </div>
+  <div class="card">
+    <div class="sec-label">RESET</div>
+    <button class="conn-btn danger" onclick="localStorage.clear(); location.reload()">
+      <i class="ti ti-trash"></i> CLEAR ALL DATA
+    </button>
   </div>
 </div>
 
@@ -238,11 +178,11 @@
   <button class="nav-btn" id="nav-dashboard" onclick="showPage('dashboard')">
     <i class="ti ti-chart-bar"></i>DASH
   </button>
-  <button class="nav-btn" id="nav-history" onclick="showPage('history')">
-    <i class="ti ti-history"></i>LOG
+  <button class="nav-btn" id="nav-positions" onclick="showPage('positions')">
+    <i class="ti ti-list"></i>TRADES
   </button>
   <button class="nav-btn" id="nav-settings" onclick="showPage('settings')">
-    <i class="ti ti-settings"></i>CONFIG
+    <i class="ti ti-settings"></i>INFO
   </button>
 </nav>
 
