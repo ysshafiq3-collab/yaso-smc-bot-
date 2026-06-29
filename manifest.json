@@ -2,28 +2,26 @@
   "name": "YASO SMC Pro Bot",
   "short_name": "YASO Bot",
   "description": "Professional SMC Trading Bot — XAUUSD Signals",
-  "start_url": "/yaso-smc-bot-/index.html",
-  "id": "/yaso-smc-bot-/",
+  "start_url": "./index.html",
+  "id": "./",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00ff41",
   "orientation": "portrait-primary",
-  "scope": "/yaso-smc-bot-/",
+  "scope": "./",
   "lang": "en",
-  "categories": ["finance", "utilities"],
-  "screenshots": [],
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "./icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "./icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }
